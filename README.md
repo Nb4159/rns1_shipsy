@@ -70,46 +70,12 @@ This is a full-stack task management application with a React frontend and a Fla
     npm install
     ```
 
-### Running the application
+### Usage
 
-1.  **Backend:**
-    ```bash
-    cd backend
-    venv\Scripts\activate
-    python app.py
-    ```
-
-2.  **Frontend:**
-    ```bash
-    cd frontend
-    npm start
-    ```
+Once the application is deployed, you can access the frontend at the URL provided by your hosting service (e.g., Vercel). The frontend will make requests to the backend API.
 
 ## Deployment
 
-### Vercel (for the frontend)
+The frontend of this application is designed to be deployed on a service like Vercel. The backend is a separate Flask application that needs to be deployed as a web service on a platform that supports Python, such as Render or Heroku.
 
-1.  Sign up for a Vercel account.
-2.  Connect your GitHub account and select the repository for this project.
-3.  Configure the project:
-    -   **Framework Preset:** Create React App
-    -   **Build Command:** `npm run build`
-    -   **Output Directory:** `build`
-    -   **Install Command:** `npm install`
-4.  Add an environment variable for the backend URL:
-    -   `REACT_APP_API_URL`: The URL of your deployed backend (e.g., from Render).
-5.  Deploy the project.
-
-### Render (for the backend)
-
-1.  Sign up for a Render account.
-2.  Create a new "Web Service".
-3.  Connect your GitHub account and select the repository for this project.
-4.  Configure the service:
-    -   **Name:** A name for your service.
-    -   **Region:** Choose a region.
-    -   **Branch:** `master`
-    -   **Root Directory:** `backend`
-    -   **Build Command:** `pip install -r requirements.txt`
-    -   **Start Command:** `gunicorn app:app`
-5.  Deploy the service.
+When deploying the frontend, you will need to set the `REACT_APP_API_URL` environment variable to the URL of your deployed backend.
