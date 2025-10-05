@@ -78,6 +78,9 @@ def token_required(f):
 class UserRegister(Resource):
     def post(self):
         data = request.get_json()
+        if not data or 'username' not in data or 'password' not in data:
+            return {"message": "Username and password are required"}, 400
+
         if User.query.filter_by(username=data['username']).first():
             return {"message": "User already exists"}, 400
         
@@ -132,8 +135,16 @@ class TaskListResource(Resource):
     def post(self):
         current_user = g.current_user
         data = request.get_json()
-        due_date_str = data.get('due_date')
-        due_date = datetime.strptime(due_date_str, '%Y-%m-%d').date() if due_date_str else None
+
+        if not data or 'title' not in data:
+            return {'message': 'Title is a required field'}, 400
+
+        try:
+            due_date_str = data.get('due_date')
+            due_date = datetime.strptime(due_date_str, '%Y-%m-%d').date() if due_date_str else None
+        except ValueError:
+            return {'message': 'Invalid date format. Please use YYYY-MM-DD.'}, 400
+
         new_task = Task(
             title=data['title'],
             description=data.get('description'),
@@ -189,6 +200,9 @@ class TaskResource(Resource):
 class UserLogin(Resource):
     def post(self):
         data = request.get_json()
+        if not data or 'username' not in data or 'password' not in data:
+            return {"message": "Username and password are required"}, 400
+
         user = User.query.filter_by(username=data['username']).first()
         if user and user.check_password(data['password']):
             token = jwt.encode({
