@@ -16,7 +16,7 @@ const TaskList = ({ token, tasks, fetchTasks }) => {
       setLoading(true);
       setError(null);
       try {
-        await axios.delete(`http://127.0.0.1:5000/tasks/${taskId}`, {
+        await axios.delete(`/tasks/${taskId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         fetchTasks();

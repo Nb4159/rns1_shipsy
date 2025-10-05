@@ -14,7 +14,7 @@ const Login = ({ setToken }) => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.post('http://127.0.0.1:5000/login', { username, password });
+      const response = await axios.post('/login', { username, password });
       setToken(response.data.token);
       navigate('/');
     } catch (err) {

@@ -7,12 +7,13 @@ import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
 import './App.css';
 
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
+
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [searchOptions, setSearchOptions] = useState({});
 
   const handleSetToken = (newToken) => {
     setToken(newToken);
@@ -34,11 +35,10 @@ function App() {
   });
 
   const fetchTasks = async (options = {}) => {
-    console.log('fetchTasks called with:', options);
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get('http://127.0.0.1:5000/tasks', {
+      const response = await axios.get('/tasks', {
         headers: { Authorization: `Bearer ${token}` },
         params: options
       });
@@ -50,16 +50,11 @@ function App() {
     }
   };
 
-  const handleSearch = (options) => {
-    console.log('handleSearch called with:', options);
-    setSearchOptions({...options});
-  }
-
   useEffect(() => {
     if (token) {
       fetchTasks();
     }
-  }, [token, searchOptions]);
+  }, [token]);
 
   return (
     <Router>
@@ -81,7 +76,6 @@ function App() {
                   token={token} 
                   tasks={tasks} 
                   fetchTasks={fetchTasks} 
-                  handleSearch={handleSearch} 
                 />
               </div>
             ) : (

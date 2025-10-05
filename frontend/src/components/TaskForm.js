@@ -33,12 +33,12 @@ const TaskForm = ({ token, task, onTaskCreated, onTaskUpdated }) => {
     const taskData = { title, description, priority, complexity, due_date: dueDate };
     try {
       if (task) {
-        await axios.put(`http://127.0.0.1:5000/tasks/${task.id}`, taskData, {
+        await axios.put(`/tasks/${task.id}`, taskData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         onTaskUpdated();
       } else {
-        await axios.post('http://127.0.0.1:5000/tasks', taskData, {
+        await axios.post('/tasks', taskData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         onTaskCreated();
