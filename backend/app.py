@@ -205,7 +205,8 @@ api.add_resource(TaskListResource, '/tasks')
 api.add_resource(TaskResource, '/tasks/<int:task_id>')
 api.add_resource(UserLogin, '/login')
 
+with app.app_context():
+    db.create_all()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
