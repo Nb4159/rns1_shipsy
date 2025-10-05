@@ -11,10 +11,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__, instance_relative_config=True)
 CORS(app)
-app.config.from_mapping(
-    SECRET_KEY='your-super-secret-key',
-    SQLALCHEMY_DATABASE_URI='sqlite:///tasks.db',
-)
+
+# Check if the DATABASE_URL environment variable is set
+if 'DATABASE_URL' in os.environ:
+    # If it is, use it for the database URI
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'].replace("postgres://", "postgresql://", 1)
+else:
+    # Otherwise, fall back to using a local SQLite database
+    app.config.from_mapping(
+        SECRET_KEY='your-super-secret-key',
+        SQLALCHEMY_DATABASE_URI='sqlite:///tasks.db',
+    )
 
 # ensure the instance folder exists
 try:
