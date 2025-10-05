@@ -1,0 +1,12 @@
+# Backend
+backend/venv/
+backend/instance/
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+
+# Other
+oask/
+task/
+tasks/
