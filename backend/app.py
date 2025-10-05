@@ -10,7 +10,7 @@ from sqlalchemy import case, or_
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__, instance_relative_config=True)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 # Check if the DATABASE_URL environment variable is set
 if 'DATABASE_URL' in os.environ:
