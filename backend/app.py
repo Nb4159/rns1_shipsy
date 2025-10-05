@@ -196,7 +196,7 @@ class UserLogin(Resource):
             token = jwt.encode({
                 'user_id': user.id,
                 'exp' : datetime.utcnow() + timedelta(minutes = 30)
-            }, app.config['SECRET_KEY'])
+            }, app.config['SECRET_KEY'], algorithm="HS256")
             return {'token': token}
         return {'message': 'Invalid credentials'}, 401
 
